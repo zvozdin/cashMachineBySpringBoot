@@ -1,4 +1,4 @@
-package com.epam;
+package ua.com.training;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

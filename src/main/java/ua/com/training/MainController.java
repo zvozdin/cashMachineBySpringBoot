@@ -1,4 +1,4 @@
-package com.epam;
+package ua.com.training;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
