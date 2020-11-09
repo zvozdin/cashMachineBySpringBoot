@@ -23,14 +23,14 @@ CREATE TABLE users
 
 CREATE TABLE stock
 (
-	id INT AUTO_INCREMENT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
     code VARCHAR(20) UNIQUE NOT NULL,
 	name VARCHAR(20) NOT NULL,
     name_UA VARCHAR(20) NOT NULL,
-    size VARCHAR(20) NOT NULL NULL,
+    size ENUM('S', 'M', 'L') NOT NULL,
     quantity INT NOT NULL,
     price double NOT NULL,
-	PRIMARY KEY (id)
+    CONSTRAINT product_pk PRIMARY KEY (id) 
 ) ENGINE InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE checks
@@ -45,15 +45,14 @@ CREATE TABLE checks
 
 CREATE TABLE orders
 (
-	id INT AUTO_INCREMENT NOT NULL,
     check_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
     price double NOT NULL,
     bill double NOT NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY (check_id) REFERENCES checks(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES stock(id)
+    CONSTRAINT orders_pk PRIMARY KEY (check_id, product_id),
+    CONSTRAINT check_fk FOREIGN KEY (check_id) REFERENCES checks(id) ON DELETE CASCADE,
+	CONSTRAINT product_fk FOREIGN KEY (product_id) REFERENCES stock(id)
 ) ENGINE InnoDB DEFAULT CHARSET=utf8;
 
 insert into roles
@@ -99,7 +98,7 @@ values
 (1, 3, 7, 15, quantity * price),
 (1, 5, 3, 10, quantity * price),
 (2, 1, 5, 20, quantity * price),
-(2, 1, 5, 20, quantity * price),
+(2, 3, 5, 20, quantity * price),
 (3, 9, 2, 40, quantity * price);
 
 DELIMITER | 

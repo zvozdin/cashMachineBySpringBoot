@@ -1,12 +1,13 @@
 package ua.com.training.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
+@EqualsAndHashCode(of = "code")
 @Getter
 @Setter
 @Entity
@@ -16,12 +17,20 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, unique = true)
     private String code;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String name_UA;
     @Enumerated(EnumType.STRING)
     private Size size;
+    @Column(nullable = false)
     private Double price;
+    @Column(nullable = false)
     private Integer quantity;
-//    private Double bill;
+
+    @Setter(value = AccessLevel.PRIVATE)
+    @OneToMany(mappedBy = "product")
+    private List<ProductInCheck> checks= new ArrayList<>();
 }
