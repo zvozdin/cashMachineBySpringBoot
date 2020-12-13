@@ -25,12 +25,12 @@ public class User {
     @Column(nullable = false, unique = true)
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
     @Setter(value = AccessLevel.PRIVATE)
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Check> checks = new ArrayList<>();
 
     public void addCheck(Check check) {

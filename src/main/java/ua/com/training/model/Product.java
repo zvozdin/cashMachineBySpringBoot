@@ -1,10 +1,11 @@
 package ua.com.training.model;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @EqualsAndHashCode(of = "code")
@@ -30,7 +31,7 @@ public class Product {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Setter(value = AccessLevel.PRIVATE)
-    @OneToMany(mappedBy = "product")
-    private List<ProductInCheck> checks= new ArrayList<>();
+//    @Setter(value = AccessLevel.PRIVATE)
+//    @OneToMany(mappedBy = "product")
+//    private List<ProductInCheck> checks= new ArrayList<>();
 }
