@@ -4,21 +4,14 @@ CREATE DATABASE final_project_db;
 
 USE final_project_db;
 
-CREATE TABLE roles
-(
-	id INT AUTO_INCREMENT NOT NULL,
-	role VARCHAR(20) UNIQUE,
-	PRIMARY KEY (id)
-);
-
 CREATE TABLE users
 (
 	id INT AUTO_INCREMENT NOT NULL,
-    login VARCHAR(20) UNIQUE,
-    password VARCHAR(20),
-    role_id INT NOT NULL,
-	PRIMARY KEY (id),
-    FOREIGN KEY (role_id) REFERENCES roles(id) ON update CASCADE
+    login VARCHAR(20) UNIQUE not null,
+    password VARCHAR(100) not null,
+	role enum('SENIOR_CASHIER', 'CASHIER', 'COMMODITY_EXPERT'),
+    status enum('ACTIVE', 'BANNED') default 'ACTIVE',
+    CONSTRAINT users_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE stock
@@ -39,7 +32,7 @@ CREATE TABLE checks
     user_id INT NOT NULL,
     check_code INT unique NOT NULL,
 	dataTime DATETIME DEFAULT NOW(),
-	PRIMARY KEY (id),
+	CONSTRAINT checks_pk PRIMARY KEY (id) ,
     FOREIGN KEY (user_id) REFERENCES users(id)
 ) ENGINE InnoDB DEFAULT CHARSET=utf8;
 
@@ -55,20 +48,13 @@ CREATE TABLE orders
 	CONSTRAINT product_fk FOREIGN KEY (product_id) REFERENCES stock(id)
 ) ENGINE InnoDB DEFAULT CHARSET=utf8;
 
-insert into roles
-(role) 
-values 
-('SENIOR_CASHIER'),
-('CASHIER'),
-('COMMODITY_EXPERT');
-
 insert into users
-(login, password, role_id) 
+(login, password, role, status) 
 values 
-('admin', '0', 1),
-('cashier1', '0', 2),
-('cashier2', '0', 2),
-('expert1', '0', 3);
+('admin', '$2y$12$RF8bzbvtfF7bWbv2HdV1MuA.OldUvUr.0FjVb9cN8oM5j7hNhS68i', 'SENIOR_CASHIER', 'ACTIVE'),
+('cashier1', '$2y$12$0gxrXFEzK/K7GnYS95olDuUzPFrD9i69Gvj6LVdicdz5GgxeDSB1O', 'CASHIER', 'ACTIVE'),
+('cashier2', '$2y$12$0gxrXFEzK/K7GnYS95olDuUzPFrD9i69Gvj6LVdicdz5GgxeDSB1O', 'CASHIER', 'BANNED'),
+('expert1', '$2y$12$HgpAvqzif1BV6nPE9YLduO3qprDsqAuKsupa/i67zInngvIDXvCP.', 'COMMODITY_EXPERT', 'ACTIVE');
 
 insert into stock
 (code, name, name_UA, size, quantity, price) 

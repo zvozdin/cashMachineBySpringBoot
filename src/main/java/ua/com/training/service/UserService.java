@@ -11,8 +11,4 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
-    public boolean isUserExistsWithLoginAndPassword(String login, String password) {
-        return userRepository.findByLoginAndPassword(login, password).isPresent();
-    }
 }

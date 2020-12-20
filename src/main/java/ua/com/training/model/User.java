@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode(of = "login")
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
@@ -22,12 +22,20 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String login;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String password;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    // todo make as FK
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "role_id", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Roles role;
+
+    // todo make as FK
+    @Column(nullable = false, columnDefinition = "ACTIVE")
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
 
     @Setter(value = AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
